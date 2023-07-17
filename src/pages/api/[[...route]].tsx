@@ -4,14 +4,9 @@ import NextConnectReceiver from '../../utils/NextConnectReceiver';
 
 const receiver = new NextConnectReceiver({
   signingSecret: process.env.SLACK_SIGNING_SECRET || 'invalid',
-  // The `processBeforeResponse` option is required for all FaaS environments.
-  // It allows Bolt methods (e.g. `app.message`) to handle a Slack request
-  // before the Bolt framework responds to the request (e.g. `ack()`). This is
-  // important because FaaS immediately terminate handlers after the response.
   processBeforeResponse: true,
 });
 
-// Initializes your app with your bot token and the AWS Lambda ready receiver
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   receiver,
@@ -20,15 +15,21 @@ const app = new App({
 
 app.event('message', async ({ event, say }) => {
   const text = (event as any).text;
-  console.log('RECEIVED EVENT MESSAGE:');
+  const subtype = (event as any).subtype;
+
+  console.log('[INFO] - RECEIVED MESSAGE EVENT:');
   console.log(event);
-  
+
+  if (subtype === 'bot_message') {
+    console.log('[INFO] - Detected message sent from bot, ignoring...');
+    return;
+  }
+
   await say({
     text: text || 'Hello world!',
   });
 });
 
-// this is run just in case
 const router = receiver.start();
 
 router.get('/api', (req: NextApiRequest, res: NextApiResponse) => {
