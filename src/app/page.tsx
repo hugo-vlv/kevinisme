@@ -27,7 +27,7 @@ export default function Home() {
         await fetch(process.env.NEXT_PUBLIC_SLACK_WEBHOOK_URL, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: JSON.stringify({
             "text": textValue,
