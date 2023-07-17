@@ -38,4 +38,12 @@ router.get('/api', (req: NextApiRequest, res: NextApiResponse) => {
   });
 })
 
+router.get('/api/cron/health', (req: NextApiRequest, res: NextApiResponse) => {
+    res.status(200).end('All good!');
+})
+
+router.get('/api/cron/prayer', (req: NextApiRequest, res: NextApiResponse) => {
+    res.status(200).end('[RAN PRAYER]');
+})
+
 export default router.handler();
