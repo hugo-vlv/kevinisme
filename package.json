@@ -9,14 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@slack/bolt": "^3.13.2",
+    "@slack/logger": "^3.0.0",
+    "@slack/oauth": "^2.6.1",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
+    "crypto": "^1.0.1",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
     "next": "13.4.10",
+    "next-connect": "^1.0.0",
+    "querystring": "^0.2.1",
+    "raw-body": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "tsscmp": "^1.0.6",
     "typescript": "5.1.6"
   }
 }
