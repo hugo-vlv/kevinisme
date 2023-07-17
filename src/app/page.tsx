@@ -1,7 +1,44 @@
+'use client'
+
+import { useState } from 'react';
 import Image from 'next/image'
 import styles from './page.module.css'
 
+function getFormattedTimestamp() {
+  const dateObj = new Date();
+  const unixTimestamp = dateObj.getTime() / 1000; // Convert to Unix Timestamp (seconds)
+
+  // Append milliseconds with a precision of 6 digits (000000)
+  const formattedTimestamp = unixTimestamp.toFixed(6);
+
+  return formattedTimestamp;
+}
+
 export default function Home() {
+  const [textValue, setTextValue] = useState('');
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      console.log(process.env);
+      
+      if (process.env.NEXT_PUBLIC_SLACK_WEBHOOK_URL) {
+        await fetch(process.env.NEXT_PUBLIC_SLACK_WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            "text": textValue,
+          }),
+        })
+      }
+    } catch (error) {
+
+    }
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -9,6 +46,9 @@ export default function Home() {
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.tsx</code>
         </p>
+        <form onSubmit={handleSubmit}>
+          <input type="text" value={textValue} onChange={(e) => setTextValue(e.target.value)} />
+        </form>
         <div>
           <a
             href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"

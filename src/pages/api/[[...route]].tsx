@@ -20,7 +20,8 @@ const app = new App({
 
 app.event('message', async ({ event, say }) => {
   const text = (event as any).text;
-  console.log('RECEIVED MESSAGE: ', text);
+  console.log('RECEIVED EVENT MESSAGE:');
+  console.log(event);
   
   await say({
     text: text || 'Hello world!',
