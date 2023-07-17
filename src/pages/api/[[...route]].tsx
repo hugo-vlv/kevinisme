@@ -22,7 +22,7 @@ app.event('message', async ({ event, say }) => {
   const text = (event as any).text;
   console.log('RECEIVED MESSAGE: ', text);
   
-  say({
+  await say({
     text: text || 'Hello world!',
   });
 });
